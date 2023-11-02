@@ -1,0 +1,31 @@
+class Character extends Phaser.Physics.Arcade.Sprite{
+    constructor(scene, x, y, texture, frame){
+        super(scene, x, y, texture, frame); 
+
+        scene.add.existing(this); 
+        scene.physics.add.existing(this); 
+        this.isHit = false; 
+        this.moveSpeed = 6; 
+        
+        //add sound effects later lol 
+    }
+
+    update(){
+       
+        //keyboard functionality 
+        if(Phaser.Input.Keyboard.JustDown(keyRIGHT) && this.isHit == false){
+            this.x += this.moveSpeed; 
+        } 
+        if(Phaser.Input.Keyboard.JustDown(keyLEFT) && this.isHit == false){
+            this.x -= this.moveSpeed; 
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){
+            this.y -= this.moveSpeed; 
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && this.isHit == false){
+            this.y += this.moveSpeed; 
+        }
+    }
+
+}  
+
