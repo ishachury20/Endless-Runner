@@ -11,8 +11,8 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     }
 
     update(){
-       
         //keyboard functionality 
+        //get rid of left arrow key
         if(Phaser.Input.Keyboard.JustDown(keyRIGHT) && this.isHit == false){
             this.x += this.moveSpeed; 
         } 

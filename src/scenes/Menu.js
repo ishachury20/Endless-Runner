@@ -1,3 +1,12 @@
+//create animation for colliding with cloud 
+//create cloud group that adds more clouds 
+//increase speed 
+//create coin asset and collision 
+//create speedbost asset, collision, and functionality 
+//add music (relatively easy) - sfx + looping background music 
+//create tutorial scene 
+//create clouds scene 
+
 class Menu extends Phaser.Scene {
     constructor() {
         super("menuScene"); 

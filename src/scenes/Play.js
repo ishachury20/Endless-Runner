@@ -8,6 +8,11 @@ class Play extends Phaser.Scene {
         this.load.image('character', './assets/pixilart-drawing-character.png'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
+
+        //this.load.spritesheet('character','./assets/character-pixilart.png', {
+        //    frameWidth: 32,
+        //    frameHeight: 32
+        //})
     }
 
     create(){
@@ -63,7 +68,6 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, rectangle4);  
         */ 
 
-        const {x, y, width, height } = this.physics.world.bounds; 
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT); 
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT); 
@@ -89,8 +93,24 @@ class Play extends Phaser.Scene {
         cloud2.setVelocityX(100)
         cloud2.body.setCollideWorldBounds(true); 
         cloud2.body.setBounce(1); 
-        cloud2.setX(Phaser.Math.Between(0 + cloud2.width /2, game.config.width - cloud2.width/ 2)); 
         cloud2.body.setImmovable(true); 
+
+        this.physics.add.collider(cloud2, rectangle3, (cloud, rectangle) => {
+            cloud2.setX(game.config.width-10); 
+            cloud2.setY(Phaser.Math.Between(0, game.config.height)); 
+            //cloud2.setRandomPosition(x, y, width, height); 
+        })
+
+        //this.clouds = this.add.group([cloud1, cloud2]); 
+
+        
+        this.timedEvent = this.time.addEvent({
+            delay: 5000,  //every 5 seconds 
+            loop: true,
+            callback: this.addCloud,
+            callbackScope: this,
+        }) 
+       
         
     }
 
@@ -103,5 +123,26 @@ class Play extends Phaser.Scene {
         }
 
     }
+
+    addCloud(){
+        console.log('time'); 
+        if(gameOver == false){
+            //heightvar = Phaser.Math.Between(1, 10); 
+            console.log('wtf!'); 
+
+            this.addedCloud = this.physics.add.sprite(640, game.config.height / 2, 'clouds'); 
+            this.addedCloud.setVelocityX(100); 
+            this.addedCloud.body.setCollideWorldBounds(true); 
+            this.addedCloud.body.setBounce(1); 
+            this.addedCloud.body.setImmovable(true); 
+
+            this.physics.add.collider(this.addedCloud, rectangle3, (addedcloud, rectangle) => {
+                addedcloud.destroy(); 
+                //cloud1.setRandomPosition(x, y, width, height); 
+            })
+        } 
+    }
+
+
  
 } 
