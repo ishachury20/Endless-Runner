@@ -75,8 +75,12 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN); 
 
         //bouncing back and forth :D 
-        let cloud1 = this.physics.add.sprite(600, game.config.height / 4, 'clouds'); 
-        cloud1.setVelocityX(100)
+
+        console.log(velocityVar); 
+
+        let cloud1 = this.physics.add.sprite(600, game.config.height / 4, 'clouds').setScale(2); 
+        cloud1.setVelocityX(200)
+        this.physics.moveToObject(cloud1, this.player) //velocityVar); 
         cloud1.body.setCollideWorldBounds(true); 
         cloud1.body.setBounce(1); 
         cloud1.body.setImmovable(true); 
@@ -88,9 +92,15 @@ class Play extends Phaser.Scene {
             //cloud1.setRandomPosition(x, y, width, height); 
         })
 
+        this.physics.add.collider(cloud1, this.player, (cloud, player) => {
+            this.player.destroy(); 
+            gameOver = true; 
+        })
 
-        let cloud2 = this.physics.add.sprite(600, game.config.height / 2, 'clouds'); 
-        cloud2.setVelocityX(100)
+
+        let cloud2 = this.physics.add.sprite(600, game.config.height / 2, 'clouds').setScale(2); 
+        cloud2.setVelocityX(200)
+        this.physics.moveToObject(cloud2, this.player); 
         cloud2.body.setCollideWorldBounds(true); 
         cloud2.body.setBounce(1); 
         cloud2.body.setImmovable(true); 
@@ -100,6 +110,12 @@ class Play extends Phaser.Scene {
             cloud2.setY(Phaser.Math.Between(0, game.config.height)); 
             //cloud2.setRandomPosition(x, y, width, height); 
         })
+
+        this.physics.add.collider(cloud2, this.player, (cloud2, player) => {
+            this.player.destroy(); 
+            gameOver = true; 
+        })
+
 
         //this.clouds = this.add.group([cloud1, cloud2]); 
 
@@ -115,12 +131,24 @@ class Play extends Phaser.Scene {
     }
 
     update(){
+        
         this.background.tilePositionX += 0.5; 
         this.stars.tilePositionX += 1; 
+        if(timer % 5 == 0 && timer < 300){
+            this.background.tilePositionX += 0.5;
+            this.stars.tilePositionX += 0.25; 
+            this.player.moveSpeed += 0.05; 
+        }
 
         if(gameOver == false){
             this.player.update(); 
         }
+
+        if(gameOver == true){
+            this.scene.start("gameOverScene");
+        }
+
+
 
     }
 
@@ -129,35 +157,41 @@ class Play extends Phaser.Scene {
     addCloud(){
         console.log('time'); 
         if(gameOver == false){
+            console.log('time', timer); 
             timer += 5; 
-            //adjust speed/level >:D 
+           
 
             console.log(timer); 
-            heightvar = Phaser.Math.Between(1, 10); //randomize where cloud appears 
-            velocityVar = Phaser.Math.Between(115, 250); 
-            this.addedCloud = this.physics.add.sprite(640, game.config.height / heightvar, 'clouds'); 
-            
-            if(timer % 20 == 0){
-                this.addedCloud.setVelocityX(velocityVar)
+            heightvar = Phaser.Math.Between(1, 5); //randomize where cloud appears 
+            this.addedCloud = this.physics.add.sprite(640, game.config.height / heightvar, 'clouds').setScale(2); 
+
+            if(timer % 5 == 0 && timer < 300){
+                velocityVar += 7; 
             } 
-            else if(timer % 25 == 0){
-                console.log('fast enough or not?')
-                this.addedCloud.setVelocityX(velocityVar * 10); 
-            }
-            else{
-                this.addedCloud.setVelocityX(100); 
-            } 
+
+            this.addedCloud.body.setVelocityX(velocityVar); 
+            //this.physics.moveToObject(this.addedCloud, this.player);  //velocityVar); 
             this.addedCloud.body.setCollideWorldBounds(true); 
             this.addedCloud.body.setBounce(1); 
             this.addedCloud.body.setImmovable(true); 
 
-            
-
+    
             this.physics.add.collider(this.addedCloud, rectangle3, (addedcloud, rectangle) => {
                 addedcloud.destroy(); 
+                if(timer < 110){
+                    this.addCloud();
+                }
+                
                 //cloud1.setRandomPosition(x, y, width, height); 
-            }); 
-        } 
+            });
+            
+            
+        }
+        
+        this.physics.add.collider(this.addedCloud, this.player, (clouds, player) => {
+            this.player.destroy(); 
+            gameOver = true; 
+        })
     }
 
 

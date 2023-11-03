@@ -38,7 +38,7 @@ let rectangle3;
 let rectangle4; 
 
 let heightvar; 
-let velocityVar; 
+var velocityVar = 100; 
 
 let gameOver = false; 
 
