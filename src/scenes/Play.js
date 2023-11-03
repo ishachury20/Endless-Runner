@@ -28,7 +28,7 @@ class Play extends Phaser.Scene {
         this.player.setOffset(17, 9); 
         this.player.body.setCollideWorldBounds(true); 
         this.player.body.setImmovable(true); 
-        this.player.setGravityY(1); 
+        this.player.setGravityY(0.25); 
         
         rectangle3 = this.add.rectangle(0, 0, borderUISize/2, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
         this.physics.add.existing(rectangle3); 
@@ -124,22 +124,39 @@ class Play extends Phaser.Scene {
 
     }
 
+    //https://www.html5gamedevs.com/topic/18414-creating-sprites-inside-a-for-loop-breaks-the-loop/
+    //this post inspired my idea of using time intervals to randomly generate clouds :D  
     addCloud(){
         console.log('time'); 
         if(gameOver == false){
-            //heightvar = Phaser.Math.Between(1, 10); 
-            console.log('wtf!'); 
+            timer += 5; 
+            //adjust speed/level >:D 
 
-            this.addedCloud = this.physics.add.sprite(640, game.config.height / 2, 'clouds'); 
-            this.addedCloud.setVelocityX(100); 
+            console.log(timer); 
+            heightvar = Phaser.Math.Between(1, 10); //randomize where cloud appears 
+            velocityVar = Phaser.Math.Between(115, 250); 
+            this.addedCloud = this.physics.add.sprite(640, game.config.height / heightvar, 'clouds'); 
+            
+            if(timer % 20 == 0){
+                this.addedCloud.setVelocityX(velocityVar)
+            } 
+            else if(timer % 25 == 0){
+                console.log('fast enough or not?')
+                this.addedCloud.setVelocityX(velocityVar * 10); 
+            }
+            else{
+                this.addedCloud.setVelocityX(100); 
+            } 
             this.addedCloud.body.setCollideWorldBounds(true); 
             this.addedCloud.body.setBounce(1); 
             this.addedCloud.body.setImmovable(true); 
 
+            
+
             this.physics.add.collider(this.addedCloud, rectangle3, (addedcloud, rectangle) => {
                 addedcloud.destroy(); 
                 //cloud1.setRandomPosition(x, y, width, height); 
-            })
+            }); 
         } 
     }
 

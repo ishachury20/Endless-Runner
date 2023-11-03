@@ -37,7 +37,11 @@ let rectangle2;
 let rectangle3; 
 let rectangle4; 
 
+let heightvar; 
+let velocityVar; 
+
 let gameOver = false; 
 
+var timer = 0; 
 var highscore = 0; 
 var highScoreText; 
