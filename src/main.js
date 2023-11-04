@@ -48,3 +48,5 @@ let gameOver = false;
 var timer = 0; 
 var highscore = 0; 
 var highScoreText; 
+
+let playerDirection = 'right'

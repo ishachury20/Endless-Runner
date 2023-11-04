@@ -7,24 +7,35 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         this.isHit = false; 
         this.moveSpeed = 6; 
         
-        //add sound effects later lol 
-    }
+    } 
 
     update(){
         //keyboard functionality 
         //get rid of left arrow key
+        //let playerVector = new Phaser.Math.Vector2(0, 0)
+
         if(Phaser.Input.Keyboard.JustDown(keyRIGHT) && this.isHit == false){
             this.x += this.moveSpeed; 
+            //playerVector.x = 1
+            playerDirection = 'right'
         } 
+
         if(Phaser.Input.Keyboard.JustDown(keyLEFT) && this.isHit == false){
+            //playerVector.x = -1
+            playerDirection = 'left'
             this.x -= this.moveSpeed; 
         }
-        if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){
+
+        this.anims.play(`${playerDirection}walk`); 
+
+        
+        /*if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){
             this.y -= this.moveSpeed; 
         }
         if(Phaser.Input.Keyboard.JustDown(keyDOWN) && this.isHit == false){
             this.y += this.moveSpeed; 
-        }
+        }*/ 
+
     }
 
 }  

@@ -5,7 +5,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         this.load.image('background', './assets/pixilart-drawing-background.png'); 
-        this.load.image('character', './assets/pixilart-drawing-character.png'); 
+        this.load.atlas('character', 'bird-spritesheet.png','sprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
 
@@ -18,17 +18,20 @@ class Play extends Phaser.Scene {
     create(){
 
         console.log('hi')
+
+        this.player = new Character(this, game.config.width/10, game.config.height/2, 'character', 'sprite2'); 
+        //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'character', 'sprite3'); 
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0,0); 
         this.stars = this.add.tileSprite(0, 0, 640, 480, 'stars').setOrigin(0,0); 
 
         //https://www.html5gamedevs.com/topic/47283-cannot-use-physics-on-a-class-that-extends-phaserphysicsarcadesprite/
         //code for setting arcade physics in character class 
-        this.player = new Character(this, game.config.width/10, game.config.height/2, 'character'); //.setOrigin(0.5, 0); 
+        /*this.player = new Character(this, game.config.width/10, game.config.height/2, 'character'); //.setOrigin(0.5, 0); 
         this.player.setSize(23,23); 
         this.player.setOffset(17, 9); 
         this.player.body.setCollideWorldBounds(true); 
         this.player.body.setImmovable(true); 
-        this.player.setGravityY(0.25); 
+        this.player.setGravityY(0.25); */ 
         
         rectangle3 = this.add.rectangle(0, 0, borderUISize/2, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
         this.physics.add.existing(rectangle3); 
@@ -77,7 +80,7 @@ class Play extends Phaser.Scene {
         //bouncing back and forth :D 
 
         //randomize intensity or gradually build it up and lower it 
-       this.light = this.lights.addPointLight(400, 300, 0xffffff, 8, 0.4); 
+        this.light = this.lights.addPointLight(400, 300, 0xffffff, 8, 0.4); 
         
 
         
@@ -155,6 +158,7 @@ class Play extends Phaser.Scene {
         }
         //Phaser.Math.Wrap(this.light); 
 
+        
 
         if(timer % 5 == 0 && timer < 300){
             this.background.tilePositionX += 0.5;
