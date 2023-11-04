@@ -49,6 +49,68 @@ class Menu extends Phaser.Scene {
                 zeroPad: 1 
             })
         })
+
+        this.anims.create({ 
+            key: 'up walk',
+            frameRate: 5,
+            repeat: -1, //infinately 
+            frames: this.anims.generateFrameNames('character', {
+                prefix: 'sprite', 
+                start: '2', //standing frame 
+                end: '9', //static 
+                zeroPad: 1 
+            })
+        })
+
+        this.anims.create({ 
+            key: 'down walk',
+            frameRate: 5,
+            repeat: -1, //infinately 
+            frames: this.anims.generateFrameNames('character', {
+                prefix: 'sprite', 
+                start: '2', //standing frame 
+                end: '9', //static 
+                zeroPad: 1 
+            })
+        })
+
+        this.anims.create({ 
+            key: 'down walk',
+            frameRate: 5,
+            repeat: -1, //infinately 
+            frames: this.anims.generateFrameNames('character', {
+                prefix: 'sprite', 
+                start: '2', //standing frame 
+                end: '9', //static 
+                zeroPad: 1 
+            })
+        })
+
+        this.anims.create({ 
+            key: 'leftup walk',
+            frameRate: 5,
+            repeat: -1, //infinately 
+            frames: this.anims.generateFrameNames('character', {
+                prefix: 'sprite', 
+                start: '11', //standing frame 
+                end: '17', //static 
+                zeroPad: 1 
+            })
+        })
+
+        this.anims.create({ 
+            key: 'leftdown walk',
+            frameRate: 5,
+            repeat: -1, //infinately 
+            frames: this.anims.generateFrameNames('character', {
+                prefix: 'sprite', 
+                start: '11', //standing frame 
+                end: '17', //static 
+                zeroPad: 1 
+            })
+        })
+
+
     } 
 
     update(){

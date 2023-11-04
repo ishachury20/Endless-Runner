@@ -44,6 +44,7 @@ let heightvar;
 var velocityVar = 100; 
 
 let gameOver = false; 
+let direction = true; //true = right
 
 var timer = 0; 
 var highscore = 0; 

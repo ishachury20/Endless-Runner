@@ -18,13 +18,39 @@ class Character extends Phaser.Physics.Arcade.Sprite{
             this.x += this.moveSpeed; 
             //playerVector.x = 1
             playerDirection = 'right'
+            direction = true; 
         } 
 
         if(Phaser.Input.Keyboard.JustDown(keyLEFT) && this.isHit == false){
             //playerVector.x = -1
             playerDirection = 'left'
             this.x -= this.moveSpeed; 
+            direction = false; 
         }
+
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){
+            if(direction == true){ //right up 
+                playerDirection = 'up'
+            }
+            else{
+                playerDirection = 'leftup'
+            }
+            
+            this.y -= this.moveSpeed; 
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && this.isHit == false){
+            if(direction == false){ //left down 
+                playerDirection = 'leftdown'
+            } else{
+                playerDirection = 'down'
+            }
+            this.y += this.moveSpeed; 
+        }
+
+        //up 
+        //down 
+        //get rid of left 
 
         this.anims.play(`${playerDirection} walk`, true); 
 
