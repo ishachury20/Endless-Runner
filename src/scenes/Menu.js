@@ -15,7 +15,7 @@ class Menu extends Phaser.Scene {
     preload() {
         this.load.image('menuscreen', './assets/pixil-frame-menu.png'); 
         this.load.image('background', './assets/pixilart-drawing-background.png'); 
-        this.load.atlas('character', './assets/bird-spritesheet.png','./assets/sprites.json'); 
+        this.load.atlas('character', './assets/bird-spritesheet.png','./assets/Birdsprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
 

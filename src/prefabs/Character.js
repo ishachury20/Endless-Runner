@@ -26,7 +26,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
             this.x -= this.moveSpeed; 
         }
 
-        this.anims.play(`${playerDirection}walk`); 
+        this.anims.play(`${playerDirection} walk`, true); 
 
         
         /*if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){

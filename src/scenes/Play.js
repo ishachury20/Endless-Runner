@@ -5,7 +5,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         this.load.image('background', './assets/pixilart-drawing-background.png'); 
-        this.load.atlas('character', 'bird-spritesheet.png','sprites.json'); 
+        this.load.atlas('character', './assets/bird-spritesheet.png','./assets/Birdsprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
 
@@ -19,10 +19,11 @@ class Play extends Phaser.Scene {
 
         console.log('hi')
 
-        this.player = new Character(this, game.config.width/10, game.config.height/2, 'character', 'sprite2'); 
+       
         //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'character', 'sprite3'); 
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0,0); 
         this.stars = this.add.tileSprite(0, 0, 640, 480, 'stars').setOrigin(0,0); 
+        this.player = new Character(this, game.config.width/10, game.config.height/2, 'character', 'sprite2'); 
 
         //https://www.html5gamedevs.com/topic/47283-cannot-use-physics-on-a-class-that-extends-phaserphysicsarcadesprite/
         //code for setting arcade physics in character class 
