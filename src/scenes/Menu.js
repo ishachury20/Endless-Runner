@@ -15,7 +15,7 @@ class Menu extends Phaser.Scene {
     preload() {
         this.load.image('menuscreen', './assets/pixil-frame-menu.png'); 
         this.load.image('background', './assets/pixilart-drawing-background.png'); 
-        this.load.atlas('character', './assets/bird-spritesheet.png','./assets/Birdsprites.json'); 
+        this.load.atlas('character', './assets/bird-spritesheet.png','./assets/sprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
 
@@ -33,7 +33,8 @@ class Menu extends Phaser.Scene {
             frames: this.anims.generateFrameNames('character', {
                 prefix: 'sprite', 
                 start: '2', //standing frame 
-                end: '3' //static 
+                end: '9', //static 
+                zeroPad: 1 
             })
         })
 
@@ -43,8 +44,9 @@ class Menu extends Phaser.Scene {
             repeat: -1, //infinately 
             frames: this.anims.generateFrameNames('character', {
                 prefix: 'sprite', 
-                start: '8', //standing frame 
-                end: '17' //static 
+                start: '11', //standing frame 
+                end: '17', //static 
+                zeroPad: 1 
             })
         })
     } 
