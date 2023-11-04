@@ -3,6 +3,9 @@
 
 let config = {
     type: Phaser.AUTO, 
+    render: {
+        pixelArt: true, 
+    }, 
     width: 640, 
     height: 480, 
     scene: [Menu, Play], //add Menu scene 

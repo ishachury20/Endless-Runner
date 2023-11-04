@@ -76,7 +76,14 @@ class Play extends Phaser.Scene {
 
         //bouncing back and forth :D 
 
-        console.log(velocityVar); 
+        //randomize intensity or gradually build it up and lower it 
+       this.light = this.lights.addPointLight(400, 300, 0xffffff, 8, 0.4); 
+        
+
+        
+
+
+        //console.log(velocityVar); 
 
         let cloud1 = this.physics.add.sprite(600, game.config.height / 4, 'clouds').setScale(2); 
         cloud1.setVelocityX(200)
@@ -92,10 +99,10 @@ class Play extends Phaser.Scene {
             //cloud1.setRandomPosition(x, y, width, height); 
         })
 
-        this.physics.add.collider(cloud1, this.player, (cloud, player) => {
+        /*this.physics.add.collider(cloud1, this.player, (cloud, player) => {
             this.player.destroy(); 
             gameOver = true; 
-        })
+        })*/ 
 
 
         let cloud2 = this.physics.add.sprite(600, game.config.height / 2, 'clouds').setScale(2); 
@@ -111,21 +118,28 @@ class Play extends Phaser.Scene {
             //cloud2.setRandomPosition(x, y, width, height); 
         })
 
-        this.physics.add.collider(cloud2, this.player, (cloud2, player) => {
+        /*this.physics.add.collider(cloud2, this.player, (cloud2, player) => {
             this.player.destroy(); 
             gameOver = true; 
-        })
+        })*/ 
 
 
         //this.clouds = this.add.group([cloud1, cloud2]); 
 
-        
         this.timedEvent = this.time.addEvent({
             delay: 5000,  //every 5 seconds 
             loop: true,
             callback: this.addCloud,
             callbackScope: this,
         }) 
+
+        this.timedEvent2 = this.time.addEvent({
+            delay: 15000, //every 15 seconds 
+            loop: true, 
+            callback: this.triggerCamFX, 
+            callbackScope: this, 
+              
+        })
        
         
     }
@@ -134,10 +148,18 @@ class Play extends Phaser.Scene {
         
         this.background.tilePositionX += 0.5; 
         this.stars.tilePositionX += 1; 
+
+        this.light.x += 1; 
+        if(this.light.x == 640){
+            this.reset(); 
+        }
+        //Phaser.Math.Wrap(this.light); 
+
+
         if(timer % 5 == 0 && timer < 300){
             this.background.tilePositionX += 0.5;
             this.stars.tilePositionX += 0.25; 
-            this.player.moveSpeed += 0.05; 
+            this.player.moveSpeed += 0.005; 
         }
 
         if(gameOver == false){
@@ -147,8 +169,6 @@ class Play extends Phaser.Scene {
         if(gameOver == true){
             this.scene.start("gameOverScene");
         }
-
-
 
     }
 
@@ -162,8 +182,8 @@ class Play extends Phaser.Scene {
            
 
             console.log(timer); 
-            heightvar = Phaser.Math.Between(1, 5); //randomize where cloud appears 
-            this.addedCloud = this.physics.add.sprite(640, game.config.height / heightvar, 'clouds').setScale(2); 
+            heightvar = Phaser.Math.Between(1, game.config.height); //randomize where cloud appears 
+            this.addedCloud = this.physics.add.sprite(640, heightvar, 'clouds').setScale(2); 
 
             if(timer % 5 == 0 && timer < 300){
                 velocityVar += 7; 
@@ -178,22 +198,22 @@ class Play extends Phaser.Scene {
     
             this.physics.add.collider(this.addedCloud, rectangle3, (addedcloud, rectangle) => {
                 addedcloud.destroy(); 
-                if(timer < 110){
-                    this.addCloud();
-                }
+                this.addCloud();            
                 
                 //cloud1.setRandomPosition(x, y, width, height); 
-            });
-            
-            
+            }); 
+
         }
-        
-        this.physics.add.collider(this.addedCloud, this.player, (clouds, player) => {
-            this.player.destroy(); 
-            gameOver = true; 
-        })
+
     }
 
+    reset(){ //simulates Phaser.Math.Wrap function D:< 
+        this.light.x = 0; 
+    }
+
+    triggerCamFX() {
+        this.cameras.main.flash(); 
+    } 
 
  
 } 
