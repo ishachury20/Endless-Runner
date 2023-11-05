@@ -110,6 +110,12 @@ class Menu extends Phaser.Scene {
             })
         })
 
+        this.anims.create({
+            key: 'explode', 
+            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
+            frameRate: 30
+        }); 
+
 
     } 
 

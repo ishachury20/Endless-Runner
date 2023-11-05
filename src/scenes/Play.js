@@ -100,6 +100,8 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(cloud1, rectangle3, (cloud, rectangle) => {
             cloud1.setX(game.config.width-10); 
             cloud1.setY(Phaser.Math.Between(0, game.config.height)); 
+            let boom = this.add.sprite(cloud1.x, cloud1.y, 'explosion').setOrigin(0, 0);
+            boom.anims.play('explode');             // play explode animation
             //cloud1.setRandomPosition(x, y, width, height); 
         })
 
@@ -122,10 +124,10 @@ class Play extends Phaser.Scene {
             //cloud2.setRandomPosition(x, y, width, height); 
         })
 
-        /*this.physics.add.collider(cloud2, this.player, (cloud2, player) => {
+        this.physics.add.collider(cloud2, this.player, (cloud2, player) => {
             this.player.destroy(); 
             gameOver = true; 
-        })*/ 
+        })
 
 
         //this.clouds = this.add.group([cloud1, cloud2]); 
