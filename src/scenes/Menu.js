@@ -18,6 +18,7 @@ class Menu extends Phaser.Scene {
         this.load.atlas('character', './assets/bird-spritesheet.png','./assets/sprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
+        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
 
         //add audio later 
     }
@@ -112,8 +113,14 @@ class Menu extends Phaser.Scene {
 
         this.anims.create({
             key: 'explode', 
-            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
-            frameRate: 30
+            frameRate: 30, 
+            repeat: 0, 
+            frames: this.anims.generateFrameNumbers('explosion', { 
+                start: 0, 
+                end: 9, 
+                //first: 0
+            }),
+            
         }); 
 
 

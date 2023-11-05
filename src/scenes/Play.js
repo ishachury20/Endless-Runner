@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.load.atlas('character', './assets/bird-spritesheet.png','./assets/sprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
+        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
 
         //this.load.spritesheet('character','./assets/character-pixilart.png', {
         //    frameWidth: 32,
@@ -100,15 +101,18 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(cloud1, rectangle3, (cloud, rectangle) => {
             cloud1.setX(game.config.width-10); 
             cloud1.setY(Phaser.Math.Between(0, game.config.height)); 
-            let boom = this.add.sprite(cloud1.x, cloud1.y, 'explosion').setOrigin(0, 0);
-            boom.anims.play('explode');             // play explode animation
+                     // play explode animation
+            
             //cloud1.setRandomPosition(x, y, width, height); 
         })
 
-        /*this.physics.add.collider(cloud1, this.player, (cloud, player) => {
-            this.player.destroy(); 
+        this.physics.add.collider(cloud1, this.player, (cloud, player) => {
             gameOver = true; 
-        })*/ 
+            this.player.destroy(); 
+            let boom = this.add.sprite(player.x, player.y, 'explosion'); 
+            boom.anims.play('explode');    
+            //gameOver = true; 
+        })
 
 
         let cloud2 = this.physics.add.sprite(600, game.config.height / 2, 'clouds').setScale(2); 
@@ -125,9 +129,11 @@ class Play extends Phaser.Scene {
         })
 
         this.physics.add.collider(cloud2, this.player, (cloud2, player) => {
-            this.player.destroy(); 
             gameOver = true; 
-        })
+            this.player.destroy(); 
+            let boom = this.add.sprite(player.x, player.y, 'explosion'); 
+            boom.anims.play('explode');   
+        }) 
 
 
         //this.clouds = this.add.group([cloud1, cloud2]); 
@@ -173,9 +179,9 @@ class Play extends Phaser.Scene {
             this.player.update(); 
         }
 
-        if(gameOver == true){
-            this.scene.start("gameOverScene");
-        }
+        //if(gameOver == true){
+        //    this.scene.start("gameOverScene");
+        //}
 
     }
 
@@ -202,11 +208,18 @@ class Play extends Phaser.Scene {
             this.addedCloud.body.setBounce(1); 
             this.addedCloud.body.setImmovable(true); 
 
-    
+                
+            this.physics.add.collider(this.addedCloud, this.player, (addedCloud, player) => {
+                gameOver = true; 
+                this.player.destroy(); 
+                let boom = this.add.sprite(addedCloud.x, addedCloud.y, 'explosion').setOrigin(0, 0);
+                boom.anims.play('explode');   
+            })
+
             this.physics.add.collider(this.addedCloud, rectangle3, (addedcloud, rectangle) => {
                 addedcloud.destroy(); 
-                this.addCloud();            
-                
+                this.addCloud();       
+
                 //cloud1.setRandomPosition(x, y, width, height); 
             }); 
 

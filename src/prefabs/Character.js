@@ -52,7 +52,11 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         //down 
         //get rid of left 
 
-        this.anims.play(`${playerDirection} walk`, true); 
+        if(gameOver == false){
+            this.anims.play(`${playerDirection} walk`, true); 
+        } else {
+            this.anims.paused(); 
+        }
 
         
         /*if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){
