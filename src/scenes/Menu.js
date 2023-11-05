@@ -18,14 +18,17 @@ class Menu extends Phaser.Scene {
         this.load.atlas('character', './assets/bird-spritesheet.png','./assets/sprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 9});
 
         //add audio later 
     }
 
     create(){
+        
         this.menuscreen = this.add.tileSprite(0, 0, 640, 480, 'menuscreen').setOrigin(0, 0);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); 
+
+
 
         this.anims.create({ 
             key: 'right walk',
@@ -113,12 +116,10 @@ class Menu extends Phaser.Scene {
 
         this.anims.create({
             key: 'explode', 
-            frameRate: 30, 
-            repeat: 0, 
+            frameRate: 10, 
             frames: this.anims.generateFrameNumbers('explosion', { 
                 start: 0, 
                 end: 9, 
-                //first: 0
             }),
             
         }); 
