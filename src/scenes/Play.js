@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
         this.load.atlas('character', './assets/bird-spritesheet.png','./assets/sprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
-        this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 8});
 
     }
 
@@ -19,6 +19,8 @@ class Play extends Phaser.Scene {
         this.stars = this.add.tileSprite(0, 0, 640, 480, 'stars').setOrigin(0,0); 
         this.player = new Character(this, game.config.width/10, game.config.height/2, 'character', 'sprite2'); 
         this.player.setSize(45,45); 
+        this.player.setCollideWorldBounds(true); 
+        this.player.setImmovable(true);
         
 
         //https://www.html5gamedevs.com/topic/47283-cannot-use-physics-on-a-class-that-extends-phaserphysicsarcadesprite/
@@ -30,7 +32,7 @@ class Play extends Phaser.Scene {
         this.player.body.setImmovable(true); 
         this.player.setGravityY(0.25); */ 
         
-        rectangle3 = this.add.rectangle(0, 0, borderUISize/2, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
+        rectangle3 = this.add.rectangle(0, 0, borderUISize/20, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
         this.physics.add.existing(rectangle3); 
         rectangle3.body.setCollideWorldBounds(true); 
         rectangle3.body.setImmovable(true); 
@@ -38,7 +40,7 @@ class Play extends Phaser.Scene {
 
         //collider works (?) - how to repel the two objects? 
         this.physics.add.collider(this.player, rectangle3, (player, rectangle3) => {
-            console.log('huh????'); 
+            player.setBounce(0.5); 
         });
         
        
@@ -77,7 +79,15 @@ class Play extends Phaser.Scene {
         //bouncing back and forth :D 
 
         //randomize intensity or gradually build it up and lower it 
-        this.light = this.lights.addPointLight(400, 300, 0xffffff, 8, 0.4); 
+        
+        const group = this.physics.add.group({
+            setCollideWorldBounds: true
+        }); 
+        this.light = this.lights.addPointLight(400, 300, 0xffffff, 4, 0.4); 
+        this.light1 = this.lights.addPointLight(100, 400, 0xffffff, 4, 0.4); 
+        this.light2 = this.lights.addPointLight(600, 200, 0xffffff, 4, 0.4); 
+
+        this.fancylights = this.add.group([this.light, this.light1, this.light2]); 
         
 
         
@@ -158,8 +168,8 @@ class Play extends Phaser.Scene {
         this.background.tilePositionX += 0.5; 
         this.stars.tilePositionX += 1; 
 
-        this.light.x += 1; 
-        if(this.light.x == 640){
+        this.fancylights.x += 10; 
+        if(this.fancylights.x == 0){
             this.reset(); 
         }
         //Phaser.Math.Wrap(this.light); 
@@ -226,7 +236,7 @@ class Play extends Phaser.Scene {
     }
 
     reset(){ //simulates Phaser.Math.Wrap function D:< 
-        this.light.x = 0; 
+        this.fancylights.x = 640; 
     }
 
     triggerCamFX() {
