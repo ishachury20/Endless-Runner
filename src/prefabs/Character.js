@@ -47,11 +47,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
             }
             this.y += this.moveSpeed; 
         }
-
-        //up 
-        //down 
-        //get rid of left 
-
+        
         if(gameOver == false){
             this.anims.play(`${playerDirection} walk`, true); 
         } else {

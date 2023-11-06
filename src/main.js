@@ -21,7 +21,6 @@ let config = {
     },
     
 }
-console.log('wooooo!'); 
 
 
 let game = new Phaser.Game(config); 

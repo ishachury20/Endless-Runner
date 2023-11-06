@@ -22,6 +22,7 @@ class Play extends Phaser.Scene {
         this.player.setCollideWorldBounds(true); 
         this.player.setImmovable(true);
         
+        this.text = this.add.text(32, 32); 
 
         //https://www.html5gamedevs.com/topic/47283-cannot-use-physics-on-a-class-that-extends-phaserphysicsarcadesprite/
         //code for setting arcade physics in character class 
@@ -70,13 +71,14 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, rectangle4);  
         */ 
 
+        this.playercount = 0; 
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT); 
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT); 
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP); 
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN); 
 
-        //bouncing back and forth :D 
+        //this.highScoreText = this.add.text(200, 60, 'High Score:' + this.highScore, { fontSize: '32px', fill: '#fff' });
 
         //randomize intensity or gradually build it up and lower it 
         
@@ -142,8 +144,7 @@ class Play extends Phaser.Scene {
             boom.anims.play('explode');   
         }) 
 
-
-        //this.clouds = this.add.group([cloud1, cloud2]); 
+        //this.timerText = this.add.text(550, 60, '0', { fontSize: '32px', fill: '#fff' });
 
         this.timedEvent = this.time.addEvent({
             delay: 5000,  //every 5 seconds 
@@ -152,19 +153,28 @@ class Play extends Phaser.Scene {
             callbackScope: this,
         }) 
 
-        this.timedEvent2 = this.time.addEvent({
+        /*this.timedEvent2 = this.time.addEvent({
             delay: 15000, //every 15 seconds 
             loop: true, 
             callback: this.triggerCamFX, 
             callbackScope: this, 
               
-        })
+        })*/ 
+
+        this.timedEvent3 = this.time.addEvent({
+            delay: 1000, 
+            loop: true,
+            callback: this.countup,
+            callbackScope: this,
+        }) 
        
         
     }
 
     update(){
         
+        
+
         this.background.tilePositionX += 0.5; 
         this.stars.tilePositionX += 1; 
 
@@ -174,7 +184,6 @@ class Play extends Phaser.Scene {
         }
         //Phaser.Math.Wrap(this.light); 
 
-        
 
         if(timer % 5 == 0 && timer < 300){
             this.background.tilePositionX += 0.5;
@@ -186,6 +195,11 @@ class Play extends Phaser.Scene {
             this.player.update(); 
         }
 
+        if(gameOver == true){
+            this.scene.start('gameOverScene');
+        }
+
+        this.text.setText(`Score: ${this.playercount}`)
         //if(gameOver == true){
         //    this.scene.start("gameOverScene");
         //}
@@ -239,9 +253,16 @@ class Play extends Phaser.Scene {
         this.fancylights.x = 640; 
     }
 
-    triggerCamFX() {
+    /*triggerCamFX() {
         this.cameras.main.flash(); 
-    } 
+    } */ 
 
- 
+    countup(){
+        console.log('oooooo'); 
+        
+            this.playercount++; 
+            console.log('timer', this.playercount); 
+            
+        
+    } 
 } 

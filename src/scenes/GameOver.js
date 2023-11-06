@@ -3,11 +3,12 @@ class GameOver extends Phaser.Scene {
         super ("gameOverScene");
     }
     preload(){
-        this.load.image('background', './assets/pixilart-drawing-background.png'); 
+        this.load.image('gameover', './assets/gameover.png'); 
     } 
     create(){
-        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0,0); 
+        this.background = this.add.tileSprite(0, 0, 640, 480, 'gameover').setOrigin(0,0); 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         //add text (and high score)
     }
     update(){
@@ -17,5 +18,7 @@ class GameOver extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keyM)){
             this.scene.start('menuScene'); 
         }
+
+        
     }
 } 
