@@ -2,13 +2,13 @@
 'use strict'
 
 let config = {
-    type: Phaser.AUTO, 
+    type: Phaser.WEBGL, 
     render: {
         pixelArt: true, 
     }, 
     width: 640, 
     height: 480, 
-    scene: [Menu, Tutorial, Play, GameOver], //add Menu scene 
+    scene: [Menu, Tutorial, Play], //add Menu scene 
     physics: {
         default: 'arcade',
         arcade: {

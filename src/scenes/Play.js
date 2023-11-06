@@ -10,9 +10,11 @@ class Play extends Phaser.Scene {
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
         this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 8});
 
+
     }
 
     create(){
+
 
         //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'character', 'sprite3'); 
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0,0); 
@@ -23,7 +25,7 @@ class Play extends Phaser.Scene {
         this.player.setImmovable(true);
         
         this.text = this.add.text(32, 32); 
-
+        this.text.setScale(1.5); 
         //https://www.html5gamedevs.com/topic/47283-cannot-use-physics-on-a-class-that-extends-phaserphysicsarcadesprite/
         //code for setting arcade physics in character class 
         /*this.player = new Character(this, game.config.width/10, game.config.height/2, 'character'); //.setOrigin(0.5, 0); 
@@ -72,11 +74,13 @@ class Play extends Phaser.Scene {
         */ 
 
         this.playercount = 0; 
+        gameOver = false; 
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT); 
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT); 
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP); 
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN); 
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         //this.highScoreText = this.add.text(200, 60, 'High Score:' + this.highScore, { fontSize: '32px', fill: '#fff' });
 
@@ -119,7 +123,7 @@ class Play extends Phaser.Scene {
             this.player.destroy(); 
             let boom = this.add.sprite(player.x, player.y, 'explosion'); 
             boom.anims.play('explode');    
-            //gameOver = true; 
+gameOver = true; 
         })
 
 
@@ -167,14 +171,16 @@ class Play extends Phaser.Scene {
             callback: this.countup,
             callbackScope: this,
         }) 
+
+        this.highScore = localStorage.getItem('highScore') || 0;
+        //this.highScoreText = this.add.text(200, 60, 'High Score:' + this.highScore, { fontSize: '32px', fill: '#fff' });
+
        
         
     }
 
     update(){
         
-        
-
         this.background.tilePositionX += 0.5; 
         this.stars.tilePositionX += 1; 
 
@@ -195,17 +201,35 @@ class Play extends Phaser.Scene {
             this.player.update(); 
         }
 
-        if(gameOver == true){
-            this.scene.start('gameOverScene');
-        }
-
-        this.text.setText(`Score: ${this.playercount}`)
-        //if(gameOver == true){
-        //    this.scene.start("gameOverScene");
+        //gameOver == true){
+        //    this.scene.start('gameOverScene');
         //}
 
-    }
+        this.text.setText(`Score: ${this.playercount}`)
+        
+        if(gameOver == true){
+            //this.scene.start('gameOverScene');
+            this.gameoverText = this.add.text(215, 150, 'Game Over', { fontSize: '32px', fill: '#fff' });
+            this.restartText = this.add.text(125, 200, 'Press R to Restart', { fontSize: '32px', fill: '#fff' });
+            this.highScoreText = this.add.text(200, 300, 'High Score:' + this.highScore, { fontSize: '32px', fill: '#fff' });
+            
 
+            if (this.playercount > this.highScore) {
+                this.highScore = this.playercount; 
+                //console.log('??????'); 
+                this.highScoreText.setText('High Score:' + this.highScore);
+                localStorage.setItem('highScore', this.highScore);
+            } 
+
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                gameOver = false;
+                timer = 0;  
+                this.scene.restart(); 
+            }
+
+            
+        }
+    } 
     //https://www.html5gamedevs.com/topic/18414-creating-sprites-inside-a-for-loop-breaks-the-loop/
     //this post inspired my idea of using time intervals to randomly generate clouds :D  
     addCloud(){
@@ -253,16 +277,13 @@ class Play extends Phaser.Scene {
         this.fancylights.x = 640; 
     }
 
-    /*triggerCamFX() {
-        this.cameras.main.flash(); 
-    } */ 
 
     countup(){
-        console.log('oooooo'); 
-        
+        if(gameOver == false){    
             this.playercount++; 
             console.log('timer', this.playercount); 
-            
+        } 
         
     } 
 } 
+ 

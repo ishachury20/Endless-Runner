@@ -13,8 +13,6 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-
-
         this.load.image('menuscreen', './assets/background-pixilart.png'); 
         this.load.image('tutorial', './assets/tutorial.png'); 
         this.load.image('background', './assets/pixilart-drawing-background.png'); 
@@ -23,6 +21,7 @@ class Menu extends Phaser.Scene {
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
         this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 8});
 
+        this.load.audio('background', './assets/runner.mp3'); 
         
         //add audio later 
     }
@@ -131,6 +130,7 @@ class Menu extends Phaser.Scene {
     } 
 
     update(){
+        //this.sound.play('background');
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
             this.scene.start('playScene'); 
         }

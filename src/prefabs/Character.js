@@ -47,12 +47,12 @@ class Character extends Phaser.Physics.Arcade.Sprite{
             }
             this.y += this.moveSpeed; 
         }
-        
+
         if(gameOver == false){
             this.anims.play(`${playerDirection} walk`, true); 
-        } else {
+        } /*else {
             this.anims.paused(); 
-        }
+        }*/ 
 
         
         /*if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){
