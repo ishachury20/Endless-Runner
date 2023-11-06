@@ -8,7 +8,7 @@ let config = {
     }, 
     width: 640, 
     height: 480, 
-    scene: [Menu, Play], //add Menu scene 
+    scene: [Menu, Tutorial, Play, GameOver], //add Menu scene 
     physics: {
         default: 'arcade',
         arcade: {
@@ -34,6 +34,9 @@ let keyRIGHT;
 let keyLEFT; 
 let keyUP; 
 let keyDOWN; 
+let keyT; 
+let keyR; 
+let keyM; 
 
 let rectangle1; 
 let rectangle2; 

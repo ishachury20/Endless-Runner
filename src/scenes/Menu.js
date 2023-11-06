@@ -13,13 +13,17 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('menuscreen', './assets/pixil-frame-menu.png'); 
+
+
+        this.load.image('menuscreen', './assets/background-pixilart.png'); 
+        this.load.image('tutorial', './assets/tutorial.png'); 
         this.load.image('background', './assets/pixilart-drawing-background.png'); 
         this.load.atlas('character', './assets/bird-spritesheet.png','./assets/sprites.json'); 
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
         this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 9});
 
+        
         //add audio later 
     }
 
@@ -27,6 +31,7 @@ class Menu extends Phaser.Scene {
         
         this.menuscreen = this.add.tileSprite(0, 0, 640, 480, 'menuscreen').setOrigin(0, 0);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); 
+        keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T); 
 
 
 
@@ -123,14 +128,18 @@ class Menu extends Phaser.Scene {
             }),
             
         }); 
-
-
     } 
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
             this.scene.start('playScene'); 
         }
+
+    
+        if(Phaser.Input.Keyboard.JustDown(keyT)) {
+            this.scene.start('tutorialScene');   
+        } 
+        
     }
 
 } 

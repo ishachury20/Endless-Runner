@@ -10,22 +10,15 @@ class Play extends Phaser.Scene {
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
         this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 9});
 
-        //this.load.spritesheet('character','./assets/character-pixilart.png', {
-        //    frameWidth: 32,
-        //    frameHeight: 32
-        //})
     }
 
     create(){
 
-        console.log('hi')
-
-       
         //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'character', 'sprite3'); 
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0,0); 
         this.stars = this.add.tileSprite(0, 0, 640, 480, 'stars').setOrigin(0,0); 
         this.player = new Character(this, game.config.width/10, game.config.height/2, 'character', 'sprite2'); 
-
+        this.player.setSize(45,45); 
         
 
         //https://www.html5gamedevs.com/topic/47283-cannot-use-physics-on-a-class-that-extends-phaserphysicsarcadesprite/
@@ -98,6 +91,7 @@ class Play extends Phaser.Scene {
         cloud1.body.setCollideWorldBounds(true); 
         cloud1.body.setBounce(1); 
         cloud1.body.setImmovable(true); 
+        cloud1.setSize(55, 17); 
         //cloud1.setX(Phaser.Math.Between(0 + cloud1.width /2, game.config.width - cloud1.width/ 2)); 
 
         this.physics.add.collider(cloud1, rectangle3, (cloud, rectangle) => {
@@ -123,6 +117,7 @@ class Play extends Phaser.Scene {
         cloud2.body.setCollideWorldBounds(true); 
         cloud2.body.setBounce(1); 
         cloud2.body.setImmovable(true); 
+        cloud2.setSize(55, 17); 
 
         this.physics.add.collider(cloud2, rectangle3, (cloud, rectangle) => {
             cloud2.setX(game.config.width-10); 
@@ -209,6 +204,7 @@ class Play extends Phaser.Scene {
             this.addedCloud.body.setCollideWorldBounds(true); 
             this.addedCloud.body.setBounce(1); 
             this.addedCloud.body.setImmovable(true); 
+            this.addedCloud.setSize(55, 17); 
 
                 
             this.physics.add.collider(this.addedCloud, this.player, (addedCloud, player) => {
