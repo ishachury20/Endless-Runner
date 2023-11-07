@@ -178,7 +178,7 @@ class Play extends Phaser.Scene {
             callbackScope: this,
         }) 
 
-        this.highScore = localStorage.getItem('highScore') || 0;
+        highScore = localStorage.getItem('highScore') || 0;
         //this.highScoreText = this.add.text(200, 60, 'High Score:' + this.highScore, { fontSize: '32px', fill: '#fff' });
 
        
@@ -212,35 +212,24 @@ class Play extends Phaser.Scene {
         //}
 
         this.text.setText(`Score: ${this.playercount}`)
+        currentScore = this.playercount; 
 
         if(gameOver == true && this.animation == true){
             gameOver = false;
             timer = 0; 
             this.scene.start('gameOverScene');   
         }
-        
-        /*if(gameOver == true){
-            //this.scene.start('gameOverScene');
-            this.gameoverText = this.add.text(215, 150, 'Game Over', { fontSize: '32px', fill: '#fff' });
-            this.restartText = this.add.text(125, 200, 'Press R to Restart', { fontSize: '32px', fill: '#fff' });
-            this.highScoreText = this.add.text(200, 300, 'High Score:' + this.highScore, { fontSize: '32px', fill: '#fff' });
+
+        this.highScoreText = this.add.text(400, 30, 'High Score: ' + highScore, { fontSize: '25px', fill: '#fff' });
             
 
-            if (this.playercount > this.highScore) {
-                this.highScore = this.playercount; 
-                //console.log('??????'); 
-                this.highScoreText.setText('High Score:' + this.highScore);
-                localStorage.setItem('highScore', this.highScore);
-            } 
+        if (this.playercount > highScore) {
+            highScore = this.playercount; 
+            //console.log('??????'); 
+            this.highScoreText.setText('High Score:' + highScore);
+            localStorage.setItem('highScore', highScore);
+        } 
 
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                gameOver = false;
-                timer = 0;  
-                this.scene.restart(); 
-            }
-
-            
-        }*/ 
     } 
     //https://www.html5gamedevs.com/topic/18414-creating-sprites-inside-a-for-loop-breaks-the-loop/
     //this post inspired my idea of using time intervals to randomly generate clouds :D  
@@ -269,9 +258,12 @@ class Play extends Phaser.Scene {
                 
             this.physics.add.collider(this.addedCloud, this.player, (addedCloud, player) => {
                 this.player.destroy(); 
-                let boom = this.add.sprite(addedCloud.x, addedCloud.y, 'explosion').setOrigin(0, 0);
-                boom.anims.play('explode');   
                 gameOver = true; 
+                let boom = this.add.sprite(player.x, player.y, 'explosion'); 
+                boom.anims.play('explode').once('animationcomplete', ()=> {
+                    this.animation = true; 
+                }); 
+
             })
 
             this.physics.add.collider(this.addedCloud, rectangle3, (addedcloud, rectangle) => {

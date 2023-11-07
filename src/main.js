@@ -49,7 +49,7 @@ let gameOver = false;
 let direction = true; //true = right
 
 var timer = 0; 
-var highscore = 0; 
-var highScoreText; 
+var highScore = 0; 
+var currentScore = 0; 
 
 let playerDirection = 'right'
