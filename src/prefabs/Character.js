@@ -50,9 +50,11 @@ class Character extends Phaser.Physics.Arcade.Sprite{
 
         if(gameOver == false){
             this.anims.play(`${playerDirection} walk`, true); 
-        } /*else {
-            this.anims.paused(); 
-        }*/ 
+        } else {
+            boom.anims.play('explode').once('animationcomplete', ()=> {
+                gameOver = true; 
+            }); 
+        }
 
         
         /*if(Phaser.Input.Keyboard.JustDown(keyUP) && this.isHit == false){

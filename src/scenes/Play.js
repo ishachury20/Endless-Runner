@@ -74,7 +74,7 @@ class Play extends Phaser.Scene {
         */ 
 
         this.playercount = 0; 
-        gameOver = false; 
+        this.animation = false; 
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT); 
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT); 
@@ -118,12 +118,14 @@ class Play extends Phaser.Scene {
             //cloud1.setRandomPosition(x, y, width, height); 
         })
 
-        this.physics.add.collider(cloud1, this.player, (cloud, player) => {
-            gameOver = true; 
+        this.physics.add.collider(cloud1, this.player, (cloud, player) => {    
             this.player.destroy(); 
             let boom = this.add.sprite(player.x, player.y, 'explosion'); 
-            boom.anims.play('explode');    
-gameOver = true; 
+            gameOver = true; 
+            boom.anims.play('explode').once('animationcomplete', ()=> {
+                this.animation = true; 
+            }); 
+
         })
 
 
@@ -142,10 +144,14 @@ gameOver = true;
         })
 
         this.physics.add.collider(cloud2, this.player, (cloud2, player) => {
-            gameOver = true; 
             this.player.destroy(); 
+            gameOver = true; 
             let boom = this.add.sprite(player.x, player.y, 'explosion'); 
-            boom.anims.play('explode');   
+            boom.anims.play('explode').once('animationcomplete', ()=> {
+                this.animation = true; 
+            }); 
+            //boom.anims.play('explode').once('animationcomplete'); 
+            //gameOver = true; 
         }) 
 
         //this.timerText = this.add.text(550, 60, '0', { fontSize: '32px', fill: '#fff' });
@@ -206,8 +212,14 @@ gameOver = true;
         //}
 
         this.text.setText(`Score: ${this.playercount}`)
+
+        if(gameOver == true && this.animation == true){
+            gameOver = false;
+            timer = 0; 
+            this.scene.start('gameOverScene');   
+        }
         
-        if(gameOver == true){
+        /*if(gameOver == true){
             //this.scene.start('gameOverScene');
             this.gameoverText = this.add.text(215, 150, 'Game Over', { fontSize: '32px', fill: '#fff' });
             this.restartText = this.add.text(125, 200, 'Press R to Restart', { fontSize: '32px', fill: '#fff' });
@@ -228,7 +240,7 @@ gameOver = true;
             }
 
             
-        }
+        }*/ 
     } 
     //https://www.html5gamedevs.com/topic/18414-creating-sprites-inside-a-for-loop-breaks-the-loop/
     //this post inspired my idea of using time intervals to randomly generate clouds :D  
@@ -256,10 +268,10 @@ gameOver = true;
 
                 
             this.physics.add.collider(this.addedCloud, this.player, (addedCloud, player) => {
-                gameOver = true; 
                 this.player.destroy(); 
                 let boom = this.add.sprite(addedCloud.x, addedCloud.y, 'explosion').setOrigin(0, 0);
                 boom.anims.play('explode');   
+                gameOver = true; 
             })
 
             this.physics.add.collider(this.addedCloud, rectangle3, (addedcloud, rectangle) => {
