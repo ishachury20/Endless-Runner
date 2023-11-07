@@ -9,12 +9,12 @@ class Play extends Phaser.Scene {
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
         this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 8});
-        this.load.audio('background', './assets/champion-80bpm-132686.mp3'); 
+        
 
     }
 
     create(){
-        this.sound.play('background'); //issues with audio D: 
+        
         //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'character', 'sprite3'); 
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0,0); 
         this.stars = this.add.tileSprite(0, 0, 640, 480, 'stars').setOrigin(0,0); 
