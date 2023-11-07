@@ -19,10 +19,12 @@ class GameOver extends Phaser.Scene {
     update(){
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             currentScore = 0; 
+            playerDirection = 'right'
             this.scene.start('playScene');   
         } 
         if(Phaser.Input.Keyboard.JustDown(keyM)){
             currentScore = 0; 
+            playerDirection = 'right'
             this.scene.start('menuScene'); 
         }
 
