@@ -9,12 +9,14 @@ class Play extends Phaser.Scene {
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
         this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 8});
-        
+        this.load.audio('background', './assets/champion-80bpm-132686.mp3'); 
+        this.load.audio('vaporize', './assets/vaporize.wav'); 
+        this.load.audio('whoosh', './assets/whoosh.wav'); 
 
     }
 
     create(){
-        
+        this.sound.play('background'); 
         //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'character', 'sprite3'); 
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0,0); 
         this.stars = this.add.tileSprite(0, 0, 640, 480, 'stars').setOrigin(0,0); 
@@ -88,12 +90,13 @@ class Play extends Phaser.Scene {
         const group = this.physics.add.group({
             setCollideWorldBounds: true
         }); 
-        this.light = this.lights.addPointLight(400, 300, 0xffffff, 4, 0.4); 
+        
+        /*this.light = this.lights.addPointLight(400, 300, 0xffffff, 4, 0.4); 
         this.light1 = this.lights.addPointLight(100, 400, 0xffffff, 4, 0.4); 
         this.light2 = this.lights.addPointLight(600, 200, 0xffffff, 4, 0.4); 
 
         this.fancylights = this.add.group([this.light, this.light1, this.light2]); 
-        
+        */ 
 
         
 
@@ -110,6 +113,7 @@ class Play extends Phaser.Scene {
         //cloud1.setX(Phaser.Math.Between(0 + cloud1.width /2, game.config.width - cloud1.width/ 2)); 
 
         this.physics.add.collider(cloud1, rectangle3, (cloud, rectangle) => {
+            this.sound.play('whoosh'); 
             cloud1.setX(game.config.width-10); 
             cloud1.setY(Phaser.Math.Between(0, game.config.height)); 
                      // play explode animation
@@ -122,6 +126,7 @@ class Play extends Phaser.Scene {
             let boom = this.add.sprite(player.x, player.y, 'explosion'); 
             gameOver = true; 
             boom.anims.play('explode').once('animationcomplete', ()=> {
+                this.sound.play('vaporize'); 
                 this.animation = true; 
             }); 
 
@@ -137,6 +142,7 @@ class Play extends Phaser.Scene {
         cloud2.setSize(55, 17); 
 
         this.physics.add.collider(cloud2, rectangle3, (cloud, rectangle) => {
+            this.sound.play('whoosh'); 
             cloud2.setX(game.config.width-10); 
             cloud2.setY(Phaser.Math.Between(0, game.config.height)); 
             //cloud2.setRandomPosition(x, y, width, height); 
@@ -147,6 +153,7 @@ class Play extends Phaser.Scene {
             gameOver = true; 
             let boom = this.add.sprite(player.x, player.y, 'explosion'); 
             boom.anims.play('explode').once('animationcomplete', ()=> {
+                this.sound.play('vaporize'); 
                 this.animation = true; 
             }); 
             //boom.anims.play('explode').once('animationcomplete'); 
@@ -189,10 +196,10 @@ class Play extends Phaser.Scene {
         this.background.tilePositionX += 0.5; 
         this.stars.tilePositionX += 1; 
 
-        this.fancylights.x += 10; 
+        /*this.fancylights.x += 10; 
         if(this.fancylights.x == 0){
             this.reset(); 
-        }
+        } */ 
         //Phaser.Math.Wrap(this.light); 
 
 
@@ -238,7 +245,7 @@ class Play extends Phaser.Scene {
             console.log('time', timer); 
             timer += 5; 
            
-
+            this.sound.play('whoosh'); 
             console.log(timer); 
             heightvar = Phaser.Math.Between(1, game.config.height); //randomize where cloud appears 
             this.addedCloud = this.physics.add.sprite(640, heightvar, 'clouds').setScale(2); 
@@ -260,6 +267,7 @@ class Play extends Phaser.Scene {
                 gameOver = true; 
                 let boom = this.add.sprite(player.x, player.y, 'explosion'); 
                 boom.anims.play('explode').once('animationcomplete', ()=> {
+                    this.sound.play('vaporize'); 
                     this.animation = true; 
                 }); 
 
@@ -276,9 +284,9 @@ class Play extends Phaser.Scene {
 
     }
 
-    reset(){ //simulates Phaser.Math.Wrap function D:< 
+    /*reset(){ //simulates Phaser.Math.Wrap function D:< 
         this.fancylights.x = 640; 
-    }
+    }*/ 
 
 
     countup(){

@@ -20,7 +20,7 @@ class Menu extends Phaser.Scene {
         this.load.image('clouds', './assets/pixilart-drawing-clouds.png'); 
         this.load.image('stars', './assets/pixil-frame-stars.png'); 
         this.load.spritesheet('explosion', './assets/bird-explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 8});
-        this.load.audio('background', './assets/champion-80bpm-132686.mp3'); 
+        this.load.audio('click', './assets/click.wav'); 
         
         
         //add audio later 
@@ -131,13 +131,13 @@ class Menu extends Phaser.Scene {
     update(){
         
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
-            this.sound.play('background'); 
+            this.sound.play('click'); 
             this.scene.start('playScene'); 
         }
 
     
         if(Phaser.Input.Keyboard.JustDown(keyT)) {
-            this.sound.play('background'); 
+            this.sound.play('click'); 
             this.scene.start('tutorialScene');   
         } 
         
