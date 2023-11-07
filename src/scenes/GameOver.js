@@ -15,7 +15,7 @@ class GameOver extends Phaser.Scene {
         this.displayhighscore = this.add.text(320, 375, highScore, { fontSize: '30px', fill: '#fff' });
         this.displayscore = this.add.text(320, 245, currentScore, { fontSize: '30px', fill: '#fff' }); 
         this.backgroundmusiccredit = this.add.text(20, 457, "Background Music 'Champion 80bpm' by kamhunt", { fontSize: '12px', fill: '#fff' }); 
-        this.sfxcredit = this.add.text(20, 445, "Sfx by: MATRIXXX_, LorenzoTheGreat, n_audioman & ", { fontSize: '12px', fill: '#fff' }); 
+        this.sfxcredit = this.add.text(20, 445, "Sfx by: MATRIXXX_, LorenzoTheGreat, n_audioman & InspectorJ", { fontSize: '12px', fill: '#fff' }); 
     }
     update(){
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
